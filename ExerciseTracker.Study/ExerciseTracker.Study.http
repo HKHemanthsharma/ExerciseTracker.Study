@@ -1,0 +1,6 @@
+@ExerciseTracker.Study_HostAddress = http://localhost:5249
+
+GET {{ExerciseTracker.Study_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
