@@ -5,8 +5,8 @@
         public bool IsSuccess { get; set; }
         public string ResponseMethod { get; set; }
         public string Message { get; set; }
-        public T Data { get; set; }
-        public ResponseDto<T> CreateResponse(bool IsSuccess, string Message, string method, T? Data)
+        public List<T>? Data { get; set; }
+        public ResponseDto<T> CreateResponse(bool IsSuccess, string Message, string method, List<T>? Data)
         {
             return new ResponseDto<T>
             {

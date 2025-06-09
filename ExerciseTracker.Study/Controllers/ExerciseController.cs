@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ExerciseTracker.Study.Models;
+using ExerciseTracker.Study.Models.DTO;
+using ExerciseTracker.Study.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExerciseTracker.Study.Controllers
@@ -7,10 +10,15 @@ namespace ExerciseTracker.Study.Controllers
     [ApiController]
     public class ExerciseController : ControllerBase
     {
-        [HttpGet]
-        public async Task<IActionResult> GetAllExercises()
+        private readonly IService<Exercise> Service;
+        public ExerciseController(IService<Exercise> service)
         {
-
+            Service = service;
+        }
+        [HttpGet]
+        public async Task<ActionResult<ResponseDto<Exercise>>> GetAllExercises()
+        {
+            return await Service.GetAll();
         }
     }
 }
