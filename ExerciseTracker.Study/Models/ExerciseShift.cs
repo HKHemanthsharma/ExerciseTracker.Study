@@ -8,5 +8,6 @@
         public DateTime EndTime { get; set; }
         public TimeSpan Duration { get; set; }
         public string Comments { get; set; }
+        public Exercise Exercise { get; set; }
     }
 }
