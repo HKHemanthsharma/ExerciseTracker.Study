@@ -7,7 +7,7 @@ namespace ExerciseTracker.Study.Services
         Task<ResponseDto<T>> GetAll();
         Task<ResponseDto<T>> GetById(int Id);
         Task<ResponseDto<T>> Update(T Entity);
-        Task<ResponseDto<T>> Delete(T Entity);
+        Task<ResponseDto<T>> Delete(int Id);
         Task<ResponseDto<T>> Create(T Entity);
     }
 }

@@ -35,14 +35,14 @@ namespace ExerciseTracker.Study.Controllers
             );
         }
         [HttpPut]
-        public async Task<ActionResult<ResponseDto<Exercise>>> Update([FromBody] ExerciseDto NewExercise)
+        public async Task<ActionResult<ResponseDto<Exercise>>> Update([FromBody] Exercise UpdateExercise)
         {
-            return await Service.Update(new Exercise { Name = NewExercise.Name });
+            return await Service.Update(UpdateExercise);
         }
         [HttpDelete]
-        public async Task<ActionResult<ResponseDto<Exercise>>> Delete([FromBody] ExerciseDto NewExercise)
+        public async Task<ActionResult<ResponseDto<Exercise>>> Delete([FromBody]int Id)
         {
-            return await Service.Delete(new Exercise { Name = NewExercise.Name });
+            return await Service.Delete(Id);
         }
     }
 }

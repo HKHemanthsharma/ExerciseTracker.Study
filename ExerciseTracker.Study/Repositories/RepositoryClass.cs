@@ -1,9 +1,10 @@
-﻿using ExerciseTracker.Study.Models.DTO;
+﻿using ExerciseTracker.Study.Interfaces;
+using ExerciseTracker.Study.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExerciseTracker.Study.Repositories
 {
-    public class RepositoryClass<T> : IRepository<T> where T:class
+    public class RepositoryClass<T> : IRepository<T> where T:class,IEntity<T>
     {
         private readonly ContextClass Context;
         private readonly DbSet<T> DbSet;
@@ -38,11 +39,12 @@ namespace ExerciseTracker.Study.Repositories
             }
         }
 
-        public async Task<ResponseDto<T>> Delete(T Entity)
+        public async Task<ResponseDto<T>> Delete(int Id)
         {
             try
             {
-                if (await DbSet.FindAsync(Entity) != null)
+                var Entity = await DbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == Id);
+                if ( Entity != null)
                 {
                     DbSet.Remove(Entity);
                     Context.SaveChanges();
@@ -108,6 +110,16 @@ namespace ExerciseTracker.Study.Repositories
             try
             {
                 var DataEntity = await DbSet.FindAsync(Id);
+                if(DataEntity==null)
+                {
+                    return new ResponseDto<T>
+                    {
+                        IsSuccess = false,
+                        ResponseMethod = "Get",
+                        Message = "No Entity Found for given ID",
+                        Data = new List<T> { DataEntity }
+                    };
+                }
                 return new ResponseDto<T>
                 {
                     IsSuccess = true,
@@ -132,7 +144,7 @@ namespace ExerciseTracker.Study.Repositories
         {
             try
             {
-                if (await DbSet.FindAsync(Entity) != null)
+                if (await DbSet.AsNoTracking().FirstOrDefaultAsync(x=>x.Id==Entity.Id) != null)
                 {
                     DbSet.Update(Entity);
                     Context.SaveChanges();

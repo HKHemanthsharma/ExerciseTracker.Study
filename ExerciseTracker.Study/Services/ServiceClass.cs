@@ -15,9 +15,9 @@ namespace ExerciseTracker.Study.Services
             return await Repo.Create(Entity); 
         }
 
-        public async Task<ResponseDto<T>> Delete(T Entity)
+        public async Task<ResponseDto<T>> Delete(int Id)
         {
-            return await Repo.Delete(Entity);
+            return await Repo.Delete(Id);
         }
 
         public async Task<ResponseDto<T>> GetAll()

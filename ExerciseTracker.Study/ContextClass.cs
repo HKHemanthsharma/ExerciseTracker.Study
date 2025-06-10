@@ -19,7 +19,7 @@ namespace ExerciseTracker.Study
                 .WithOne(x => x.Exercise)
                 .HasForeignKey(x => x.ExerciseId);
             modelBuilder.Entity<ExerciseShift>()
-                .HasKey(x => x.ShiftId);
+                .HasKey(x => x.Id);
         }
     }
 }

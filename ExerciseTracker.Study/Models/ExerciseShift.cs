@@ -1,6 +1,8 @@
-﻿namespace ExerciseTracker.Study.Models
+﻿using ExerciseTracker.Study.Interfaces;
+
+namespace ExerciseTracker.Study.Models
 {
-    public class ExerciseShift
+    public class ExerciseShift:IEntity<ExerciseShift>
     {
         public int Id { get; set; }
         public int ExerciseId { get; set; }
