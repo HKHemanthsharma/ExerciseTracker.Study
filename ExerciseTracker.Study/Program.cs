@@ -1,5 +1,6 @@
 
 using ExerciseTracker.Study.Models;
+using ExerciseTracker.Study.Models.DTO;
 using ExerciseTracker.Study.Repositories;
 using ExerciseTracker.Study.Services;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +21,10 @@ namespace ExerciseTracker.Study
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<ContextClass>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
             builder.Services.AddScoped<IRepository<Exercise>, RepositoryClass<Exercise>>();
-           // builder.Services.AddSingleton<IRepository<ExerciseShift>, RepositoryClass<ExerciseShift>>();
+            builder.Services.AddScoped<IRepository<ExerciseDto>, RepositoryClass<ExerciseDto>>();
+            // builder.Services.AddSingleton<IRepository<ExerciseShift>, RepositoryClass<ExerciseShift>>();
             builder.Services.AddScoped<IService<Exercise>, ServiceClass<Exercise>>();
+            builder.Services.AddScoped<IService<ExerciseDto>, ServiceClass<ExerciseDto>>();
             //builder.Services.AddSingleton<IService<ExerciseShift>, ServiceClass<ExerciseShift>>();
 
             var app = builder.Build();

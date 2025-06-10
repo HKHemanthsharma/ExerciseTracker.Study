@@ -20,5 +20,29 @@ namespace ExerciseTracker.Study.Controllers
         {
             return await Service.GetAll();
         }
+        [HttpGet]
+        [Route("{Id:int}")]
+        public async Task<ActionResult<ResponseDto<Exercise>>> GetExerciseById([FromRoute] int Id)
+        {
+            return await Service.GetById(Id);
+        }
+        [HttpPost]
+        public async Task<ActionResult<ResponseDto<Exercise>>> Create([FromBody] ExerciseDto NewExercise)
+        {
+
+            return await Service.Create(new Exercise { 
+                Name=NewExercise.Name }
+            );
+        }
+        [HttpPut]
+        public async Task<ActionResult<ResponseDto<Exercise>>> Update([FromBody] ExerciseDto NewExercise)
+        {
+            return await Service.Update(new Exercise { Name = NewExercise.Name });
+        }
+        [HttpDelete]
+        public async Task<ActionResult<ResponseDto<Exercise>>> Delete([FromBody] ExerciseDto NewExercise)
+        {
+            return await Service.Delete(new Exercise { Name = NewExercise.Name });
+        }
     }
 }

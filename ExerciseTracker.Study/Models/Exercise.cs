@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<ExerciseShift> ExerciseShifts { get; set; }
+        public List<ExerciseShift>? ExerciseShifts { get; set; }
     }
 }
