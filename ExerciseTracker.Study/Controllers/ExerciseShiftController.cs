@@ -1,4 +1,5 @@
-﻿using ExerciseTracker.Study.Models;
+﻿using ExerciseTracker.Study.HelperMethods;
+using ExerciseTracker.Study.Models;
 using ExerciseTracker.Study.Models.DTO;
 using ExerciseTracker.Study.Repositories;
 using ExerciseTracker.Study.Services;
@@ -26,6 +27,48 @@ namespace ExerciseTracker.Study.Controllers
         public async Task<ActionResult<ResponseDto<ExerciseShift>>> GetById([FromRoute]int Id)
         {
             return await ShiftService.GetById(Id);
+        }
+        [HttpPost]
+        public async Task<ActionResult<ResponseDto<ExerciseShift>>> CreateShift([FromBody] ExerciseShiftDto NewExerciseDto)
+        {
+            ExerciseShift NewExerciseShift=HelperClass.ConvertToExercise(NewExerciseDto);
+            if(NewExerciseShift==null)
+            {
+                return new ResponseDto<ExerciseShift>
+                {
+                    IsSuccess = false,
+                    Data = new List<ExerciseShift>(),
+                    Message = "Bad Data! please check if The Shift Date and Times are in correct format",
+                    ResponseMethod="Post"
+                };
+
+            }
+            return await ShiftService.Create(NewExerciseShift);
+        }
+        [HttpPut]
+        [Route("{Id:int}")]
+        public async Task<ActionResult<ResponseDto<ExerciseShift>>> UpdateShift([FromRoute] int Id,[FromBody] ExerciseShiftDto UpdateExerciseDto)
+        {
+            ExerciseShift UpdateExerciseShift = HelperClass.ConvertToExercise(UpdateExerciseDto);
+            if (UpdateExerciseShift == null)
+            {
+                return new ResponseDto<ExerciseShift>
+                {
+                    IsSuccess = false,
+                    Data = new List<ExerciseShift>(),
+                    Message = "Bad Data! please check if The Shift Date and Times are in correct format",
+                    ResponseMethod = "Post"
+                };
+            }
+            UpdateExerciseShift.Id = Id;
+            return await ShiftService.Update(UpdateExerciseShift);
+        }
+        [HttpDelete]
+        [Route("{Id:int}")]
+        public async Task<ActionResult<ResponseDto<ExerciseShift>>> DeleteShift([FromRoute] int Id)
+        {
+           
+            return await ShiftService.Delete(Id);
         }
     }
 }

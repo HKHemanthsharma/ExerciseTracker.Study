@@ -50,10 +50,10 @@ namespace ExerciseTracker.Study.Migrations
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time");
-
                     b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExerciseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ExerciseId")

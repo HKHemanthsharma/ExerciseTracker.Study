@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExerciseTracker.Study.Migrations
 {
     [DbContext(typeof(ContextClass))]
-    [Migration("20250609151351_firstMigration")]
-    partial class firstMigration
+    [Migration("20250614191223_NewMigration")]
+    partial class NewMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,20 +44,19 @@ namespace ExerciseTracker.Study.Migrations
 
             modelBuilder.Entity("ExerciseTracker.Study.Models.ExerciseShift", b =>
                 {
-                    b.Property<int>("ShiftId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShiftId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Comments")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time");
-
                     b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExerciseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ExerciseId")
@@ -66,7 +65,7 @@ namespace ExerciseTracker.Study.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ShiftId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ExerciseId");
 

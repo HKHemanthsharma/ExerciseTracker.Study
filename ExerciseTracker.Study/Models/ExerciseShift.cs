@@ -8,7 +8,8 @@ namespace ExerciseTracker.Study.Models
         public int ExerciseId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public TimeSpan Duration { get; set; }
+        public DateTime ExerciseDate { get; set; }
+        public int Duration => (int)(EndTime - StartTime).TotalMinutes;
         public string? Comments { get; set; }
         public Exercise Exercise { get; set; }
     }
