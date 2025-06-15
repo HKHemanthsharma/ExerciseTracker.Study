@@ -28,13 +28,18 @@ namespace ExerciseTracker.UI
                         ShiftServiceMenu();
                         break;
                     case "Manage Workers":
-                        WorkerServiceMenu();
+                        ExerciseServiceMenu();
                         break;
                     case "Exit":
                         IsAppRunning = false;
                         break;
                 }
             }
+        }
+
+        private static void ExerciseServiceMenu()
+        {
+            throw new NotImplementedException();
         }
 
         private static void ShiftServiceMenu()
