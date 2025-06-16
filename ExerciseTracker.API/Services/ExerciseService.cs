@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExerciseTracker.UI.Services
 {
-    public static class ShiftService
+    public class ExerciseService
     {
         public static void CreateShift()
         {
@@ -20,7 +20,7 @@ namespace ExerciseTracker.UI.Services
 
         public static void GetAllShifts()
         {
-            
+            throw new NotImplementedException();
         }
 
         public static void GetSingleShift()

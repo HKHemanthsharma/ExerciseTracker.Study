@@ -35,8 +35,14 @@ namespace ExerciseTracker.Study.Controllers
             );
         }
         [HttpPut]
-        public async Task<ActionResult<ResponseDto<Exercise>>> Update([FromBody] Exercise UpdateExercise)
+        [Route("{Id:int}")]
+        public async Task<ActionResult<ResponseDto<Exercise>>> Update([FromRoute] int Id,[FromBody] ExerciseDto UpdateExerciseDto)
         {
+            Exercise UpdateExercise = new()
+            {
+               Id=  Id,
+               Name=UpdateExerciseDto.Name
+            };
             return await Service.Update(UpdateExercise);
         }
         [HttpDelete]
