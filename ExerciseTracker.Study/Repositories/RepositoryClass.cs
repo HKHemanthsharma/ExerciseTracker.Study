@@ -22,7 +22,7 @@ namespace ExerciseTracker.Study.Repositories
                 return new ResponseDto<T>
                 {
                     IsSuccess = true,
-                    ResponseMethod = "Post",
+                    ResponseMethod = "POST",
                     Message = "Successfully Created The Entity",
                     Data = new List<T> { EntityResponse.Entity }
                 };
@@ -32,7 +32,7 @@ namespace ExerciseTracker.Study.Repositories
                 return new ResponseDto<T>
                 {
                     IsSuccess = false,
-                    ResponseMethod = "Post",
+                    ResponseMethod = "POST",
                     Message = "Error Occured: "+e.Message,
                     Data = null
                 };
@@ -51,7 +51,7 @@ namespace ExerciseTracker.Study.Repositories
                     return new ResponseDto<T>
                     {
                         IsSuccess = true,
-                        ResponseMethod = "Delete",
+                        ResponseMethod = "DELETE",
                         Message = "Successfully Deleted The Entities",
                         Data = null
                     };
@@ -61,7 +61,7 @@ namespace ExerciseTracker.Study.Repositories
                     return new ResponseDto<T>
                     {
                         IsSuccess = false,
-                        ResponseMethod = "Delete",
+                        ResponseMethod = "DELETE",
                         Message = "No Entity Found to Delete",
                         Data = null
                     };
@@ -72,7 +72,7 @@ namespace ExerciseTracker.Study.Repositories
                 return new ResponseDto<T>
                 {
                     IsSuccess = false,
-                    ResponseMethod = "Delete",
+                    ResponseMethod = "DELETE",
                     Message = "Error Occured: " + e.Message,
                     Data = null
                 };
@@ -88,7 +88,7 @@ namespace ExerciseTracker.Study.Repositories
                 return new ResponseDto<T>
                 {
                     IsSuccess = true,
-                    ResponseMethod = "Get",
+                    ResponseMethod = "GET",
                     Message = "Successfully Fetched All The Entities",
                     Data = DataList
                 };
@@ -98,7 +98,7 @@ namespace ExerciseTracker.Study.Repositories
                 return new ResponseDto<T>
                 {
                     IsSuccess = false,
-                    ResponseMethod = "Get",
+                    ResponseMethod = "GET",
                     Message = "Error Occured: " + e.Message,
                     Data = null
                 };
@@ -115,7 +115,7 @@ namespace ExerciseTracker.Study.Repositories
                     return new ResponseDto<T>
                     {
                         IsSuccess = false,
-                        ResponseMethod = "Get",
+                        ResponseMethod = "GET",
                         Message = "No Entity Found for given ID",
                         Data = new List<T> { DataEntity }
                     };
@@ -123,7 +123,7 @@ namespace ExerciseTracker.Study.Repositories
                 return new ResponseDto<T>
                 {
                     IsSuccess = true,
-                    ResponseMethod = "Get",
+                    ResponseMethod = "GET",
                     Message = "Successfully Fetched The Entity With Id",
                     Data = new List<T> { DataEntity }
                 };
@@ -133,7 +133,7 @@ namespace ExerciseTracker.Study.Repositories
                 return new ResponseDto<T>
                 {
                     IsSuccess = false,
-                    ResponseMethod = "Get",
+                    ResponseMethod = "GET",
                     Message = "Error Occured: " + e.Message,
                     Data = null
                 };
@@ -151,7 +151,7 @@ namespace ExerciseTracker.Study.Repositories
                     return new ResponseDto<T>
                     {
                         IsSuccess = true,
-                        ResponseMethod = "Update",
+                        ResponseMethod = "PUT",
                         Message = "Successfully Updated The Entities",
                         Data = null
                     };
@@ -161,7 +161,7 @@ namespace ExerciseTracker.Study.Repositories
                     return new ResponseDto<T>
                     {
                         IsSuccess = false,
-                        ResponseMethod = "Update",
+                        ResponseMethod = "PUT",
                         Message = "No Entity Found to Update",
                         Data = null
                     };
@@ -172,7 +172,7 @@ namespace ExerciseTracker.Study.Repositories
                 return new ResponseDto<T>
                 {
                     IsSuccess = false,
-                    ResponseMethod = "Update",
+                    ResponseMethod = "PUT",
                     Message = "Error Occured: " + e.Message,
                     Data = null
                 };

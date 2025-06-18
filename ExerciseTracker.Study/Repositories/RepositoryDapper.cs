@@ -31,7 +31,7 @@ namespace ExerciseTracker.Study.Repositories
                     return new ResponseDto<Exercise>
                     {
                         IsSuccess = true,
-                        ResponseMethod = "Create",
+                        ResponseMethod = "POST",
                         Data = [Entity],
                         Message = "Successfully Created Entity using Dapper"
                     };
@@ -43,7 +43,7 @@ namespace ExerciseTracker.Study.Repositories
                 return new ResponseDto<Exercise>
                 {
                     IsSuccess = false,
-                    ResponseMethod = "Create",
+                    ResponseMethod = "POST",
                     Data = [],
                     Message = e.Message
                 };
@@ -65,7 +65,7 @@ namespace ExerciseTracker.Study.Repositories
                     return new ResponseDto<Exercise>
                     {
                         IsSuccess = true,
-                        ResponseMethod = "Delete",
+                        ResponseMethod = "DELETE",
                         Data = [],
                         Message = "Successfully Deleted Entity using Dapper"
                     };
@@ -77,7 +77,7 @@ namespace ExerciseTracker.Study.Repositories
                 return new ResponseDto<Exercise>
                 {
                     IsSuccess = false,
-                    ResponseMethod = "Delete",
+                    ResponseMethod = "DELETE",
                     Data = [],
                     Message = e.Message
                 };

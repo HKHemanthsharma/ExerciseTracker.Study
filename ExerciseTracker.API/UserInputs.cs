@@ -15,7 +15,7 @@ namespace ExerciseTracker.UI
             string Name=AnsiConsole.Ask<string>("[yellow]Enter the [Blue]Name[/] of the Exercise you want to Add:[/]");
             return new Exercise
             {
-                Name = Name
+                name = Name
             };
         }
     }

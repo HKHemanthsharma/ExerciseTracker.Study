@@ -21,37 +21,119 @@ namespace ExerciseTracker.UI.Repositories
         }
         public async Task<ResponseDto<T>> GetAllEntities()
         {
-            //https://localhost:7249/api/Exercise
-            var response =await Client.GetStreamAsync(BaseURL);
-            ResponseDto<T> GetResponse = JsonSerializer.Deserialize<ResponseDto<T>>(response);
-            return GetResponse;
+            try
+            {
+                //https://localhost:7249/api/Exercise
+                using (var response = await Client.GetStreamAsync(BaseURL))
+                {
+                    ResponseDto<T> GetResponse = JsonSerializer.Deserialize<ResponseDto<T>>(response);
+                    return GetResponse;
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new ResponseDto<T>
+                {
+                  IsSuccess=false,
+                  Message=e.Message,
+                  ResponseMethod="GET",
+                  Data = []
+                };
+            }
         }
         public async Task<ResponseDto<T>> GetEntiryById(int Id)
         {
-            var response = await Client.GetStreamAsync(BaseURL+$"/{Id}");
-            ResponseDto<T> GetResponse = JsonSerializer.Deserialize<ResponseDto<T>>(response);
-            return GetResponse;
+            try
+            {
+                using (var response = await Client.GetStreamAsync(BaseURL + $"/{Id}"))
+                {
+                    ResponseDto<T> GetResponse = JsonSerializer.Deserialize<ResponseDto<T>>(response);
+                    return GetResponse;
+                }             
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new ResponseDto<T>
+                {
+                    IsSuccess = false,
+                    Message = e.Message,
+                    ResponseMethod = "GET",
+                    Data = []
+                };
+            }
         }
         public async Task<ResponseDto<T>> CreateEntity(T Entity)
         {
-            var response = await Client.PostAsJsonAsync(BaseURL, Entity);
-            var StreamResponse = await response.Content.ReadAsStreamAsync();
-            ResponseDto<T> Response = await JsonSerializer.DeserializeAsync<ResponseDto<T>>(StreamResponse);
-            return Response;
+            try
+            {
+                var response = await Client.PostAsJsonAsync(BaseURL, Entity);
+                using (var StreamResponse = await response.Content.ReadAsStreamAsync())
+                {
+                    ResponseDto<T> Response = await JsonSerializer.DeserializeAsync<ResponseDto<T>>(StreamResponse);
+                    return Response;
+                }
+                    
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new ResponseDto<T>
+                {
+                    IsSuccess = false,
+                    Message = e.Message,
+                    ResponseMethod = "POST",
+                    Data = []
+                };
+            }
         }
+    
         public async Task<ResponseDto<T>> UpdateEntity(T Entity, int Id)
         {
-            var response = await Client.PutAsJsonAsync(BaseURL+$"/{Id}", Entity);
-            var StreamResponse = await response.Content.ReadAsStreamAsync();
-            ResponseDto<T> Response = JsonSerializer.Deserialize<ResponseDto<T>>(StreamResponse);
-            return Response;
+            try
+            {
+                var response = await Client.PutAsJsonAsync(BaseURL + $"/{Id}", Entity);
+                using (var StreamResponse = await response.Content.ReadAsStreamAsync())
+                {
+                    ResponseDto<T> Response = await JsonSerializer.DeserializeAsync<ResponseDto<T>>(StreamResponse);
+                    return Response;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new ResponseDto<T>
+                {
+                    IsSuccess = false,
+                    Message = e.Message,
+                    ResponseMethod = "PUT",
+                    Data = []
+                };
+            }
         }
         public async Task<ResponseDto<T>> DeleteEntity(T Entity, int Id)
         {
-            var response = await Client.DeleteAsync(BaseURL + $"/{Id}");
-            var StreamResponse = await response.Content.ReadAsStreamAsync();
-            ResponseDto<T> Response = JsonSerializer.Deserialize<ResponseDto<T>>(StreamResponse);
-            return Response;
+            try
+            {
+                var response = await Client.DeleteAsync(BaseURL + $"/{Id}");
+                using (var StreamResponse = await response.Content.ReadAsStreamAsync())
+                {
+                    ResponseDto<T> Response = await JsonSerializer.DeserializeAsync<ResponseDto<T>>(StreamResponse);
+                    return Response;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return new ResponseDto<T>
+                {
+                    IsSuccess = false,
+                    Message = e.Message,
+                    ResponseMethod = "DELETE",
+                    Data = []
+                };
+            }
         }
 
     }

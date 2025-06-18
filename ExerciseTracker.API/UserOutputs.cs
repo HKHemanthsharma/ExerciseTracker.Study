@@ -13,13 +13,16 @@ namespace ExerciseTracker.UI
     {
         public static void ShowResponse(ResponseDto<T> Response)
         {
-            if(!Response.IsSuccess)
+            Console.Clear();
+            if (!Response.IsSuccess)
             {
                 string ResponseString = $"[yellow]Response Method:{Response.ResponseMethod}\n[maroon]Reponse Message:{Response.ResponseMethod}[/][/]";
                 var panel = new Panel(ResponseString);
                 panel.Header = new PanelHeader("[Red]Request Failed!!![/]");
                 panel.Border = BoxBorder.Rounded;
                 panel.Padding = new Padding(2, 2, 2, 2);
+                AnsiConsole.Write(panel);
+                Console.ReadLine();
             }
             else
             {
@@ -28,12 +31,14 @@ namespace ExerciseTracker.UI
                 panel.Header = new PanelHeader("[lime]Request Success!!![/]");
                 panel.Border = BoxBorder.Rounded;
                 panel.Padding = new Padding(2, 2, 2, 2);
+                AnsiConsole.Write(panel);
                 string Heading = Response.ResponseMethod switch
                 {
-                    "Get" => "Here is the Entity Details",
-                    "Post" => "Details of the Entity Created",
-                    "Put" => "Details of the updated Entity",
-                    "Delete" => "Details of the Entity Deleted"
+                    "GET" => "Here is the Entity Details",
+                    "POST" => "Details of the Entity Created",
+                    "PUT" => "Details of the updated Entity",
+                    "DELETE" => "Details of the Entity Deleted",
+                    _=>"Unknown"
 
                 };
                 AnsiConsole.MarkupLine(Heading);
@@ -43,8 +48,14 @@ namespace ExerciseTracker.UI
                 props.ForEach(x => Responsetable.AddColumn(Markup.Escape(x.Name)));
                 foreach(var ResponseObject in Response.Data)
                 {
-                    List<string> RowData= props.Select(x => x.GetValue(ResponseObject).ToString()).ToList();
+                    List<string> RowData = new();
+                    props.ForEach(x => RowData.Add(x.GetValue(ResponseObject).ToString()));
                     Responsetable.AddRow(RowData.ToArray());
+                    //foreach (var prop in props)
+                    //{
+                    //    var PropValue = prop.GetValue(ResponseObject).ToString();
+                    //    RowData.Add(PropValue);
+                    //}
                 }
                 Responsetable.Border = TableBorder.Double;
                 AnsiConsole.Write(Responsetable);

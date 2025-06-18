@@ -39,6 +39,7 @@ namespace ExerciseTracker.UI
 
         private static void ExerciseServiceMenu()
         {
+            Console.Clear();
             var userOption = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                 .Title("Please select an option")
