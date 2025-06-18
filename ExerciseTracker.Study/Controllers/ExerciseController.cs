@@ -46,7 +46,8 @@ namespace ExerciseTracker.Study.Controllers
             return await Service.Update(UpdateExercise);
         }
         [HttpDelete]
-        public async Task<ActionResult<ResponseDto<Exercise>>> Delete([FromBody]int Id)
+        [Route("{Id:int}")]
+        public async Task<ActionResult<ResponseDto<Exercise>>> Delete([FromRoute]int Id)
         {
             return await Service.Delete(Id);
         }

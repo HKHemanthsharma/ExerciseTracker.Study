@@ -11,10 +11,11 @@ namespace ExerciseTracker.UI.Services
     public class ExerciseService
     {
         private static readonly Repository<Exercise> Repo= new Repository<Exercise>();
-        public static void CreateShift()
+        public static async Task CreateShift()
         {
             Exercise NewExercise = UserInputs.GetNewExercise();
-            Repo.CreateEntity();
+            ResponseDto<Exercise> CreatedExercise= await Repo.CreateEntity(NewExercise);
+
         }
 
         public static void DeleteShift()
@@ -22,14 +23,15 @@ namespace ExerciseTracker.UI.Services
             throw new NotImplementedException();
         }
 
-        public static void GetAllShifts()
+        public static async Task GetAllShifts()
         {
-            throw new NotImplementedException();
+            ResponseDto<Exercise> response=await Repo.GetAllEntities();
+            UserOutputs<Exercise>.ShowResponse(response);
         }
 
         public static void GetSingleShift()
         {
-            throw new NotImplementedException();
+            
         }
 
         public static void UpdateShift()

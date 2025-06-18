@@ -21,7 +21,8 @@ namespace ExerciseTracker.UI.Repositories
         }
         public async Task<ResponseDto<T>> GetAllEntities()
         {
-            var response=await Client.GetStreamAsync(BaseURL);
+            //https://localhost:7249/api/Exercise
+            var response =await Client.GetStreamAsync(BaseURL);
             ResponseDto<T> GetResponse = JsonSerializer.Deserialize<ResponseDto<T>>(response);
             return GetResponse;
         }
@@ -35,7 +36,7 @@ namespace ExerciseTracker.UI.Repositories
         {
             var response = await Client.PostAsJsonAsync(BaseURL, Entity);
             var StreamResponse = await response.Content.ReadAsStreamAsync();
-            ResponseDto<T> Response = JsonSerializer.Deserialize<ResponseDto<T>>(StreamResponse);
+            ResponseDto<T> Response = await JsonSerializer.DeserializeAsync<ResponseDto<T>>(StreamResponse);
             return Response;
         }
         public async Task<ResponseDto<T>> UpdateEntity(T Entity, int Id)
