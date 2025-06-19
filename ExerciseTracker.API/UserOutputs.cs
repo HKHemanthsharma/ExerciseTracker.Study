@@ -26,7 +26,7 @@ namespace ExerciseTracker.UI
             }
             else
             {
-                string ResponseString = $"[yellow]Response Method:{Response.ResponseMethod}\n[green]Reponse Message:{Response.ResponseMethod}[/][/]";
+                string ResponseString = $"[yellow]Response Method:{Response.ResponseMethod}\n[green]Reponse Message:{Response.Message}[/][/]";
                 var panel = new Panel(ResponseString);
                 panel.Header = new PanelHeader("[lime]Request Success!!![/]");
                 panel.Border = BoxBorder.Rounded;
@@ -39,7 +39,6 @@ namespace ExerciseTracker.UI
                     "PUT" => "Details of the updated Entity",
                     "DELETE" => "Details of the Entity Deleted",
                     _=>"Unknown"
-
                 };
                 AnsiConsole.MarkupLine(Heading);
                 Table Responsetable = new Table();

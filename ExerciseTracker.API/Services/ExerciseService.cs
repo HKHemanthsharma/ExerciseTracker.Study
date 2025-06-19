@@ -13,9 +13,9 @@ namespace ExerciseTracker.UI.Services
         private static readonly Repository<Exercise> Repo= new Repository<Exercise>();
         public static void  CreateShift()
         {
-            Exercise NewExercise = UserInputs.GetNewExercise();
+            Exercise NewExercise = UserInputs<Exercise>.GetNewExercise();
             ResponseDto<Exercise> CreatedExercise= Repo.CreateEntity(NewExercise).GetAwaiter().GetResult();
-
+            UserOutputs<Exercise>.ShowResponse(CreatedExercise);
         }
 
         public static void DeleteShift()
@@ -25,13 +25,16 @@ namespace ExerciseTracker.UI.Services
 
         public static void  GetAllShifts()
         {
-            ResponseDto<Exercise> response =  Repo.GetAllEntities().GetAwaiter().GetResult();
-            UserOutputs<Exercise>.ShowResponse(response);
+            ResponseDto<Exercise> Response =  Repo.GetAllEntities().GetAwaiter().GetResult();
+            UserOutputs<Exercise>.ShowResponse(Response);
         }
 
         public static void GetSingleShift()
         {
-            
+            List<Exercise> Exercises= Repo.GetAllEntities().GetAwaiter().GetResult().Data;
+            int UserChoice=UserInputs<Exercise>.GetEntityById(Exercises);
+            ResponseDto<Exercise> Response = Repo.GetEntiryById(UserChoice).GetAwaiter().GetResult();
+            UserOutputs<Exercise>.ShowResponse(Response);
         }
 
         public static void UpdateShift()
