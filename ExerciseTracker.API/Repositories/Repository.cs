@@ -42,7 +42,7 @@ namespace ExerciseTracker.UI.Repositories
                 };
             }
         }
-        public async Task<ResponseDto<T>> GetEntiryById(int Id)
+        public async Task<ResponseDto<T>> GetEntiryById(int? Id)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace ExerciseTracker.UI.Repositories
             }
         }
     
-        public async Task<ResponseDto<T>> UpdateEntity(T Entity, int Id)
+        public async Task<ResponseDto<T>> UpdateEntity(T Entity, int? Id)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace ExerciseTracker.UI.Repositories
                 };
             }
         }
-        public async Task<ResponseDto<T>> DeleteEntity(T Entity, int Id)
+        public async Task<ResponseDto<T>> DeleteEntity(int? Id)
         {
             try
             {

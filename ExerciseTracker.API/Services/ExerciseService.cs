@@ -11,35 +11,43 @@ namespace ExerciseTracker.UI.Services
     public class ExerciseService
     {
         private static readonly Repository<Exercise> Repo= new Repository<Exercise>();
-        public static void  CreateShift()
+        public static void  CreateExercise()
         {
-            Exercise NewExercise = UserInputs<Exercise>.GetNewExercise();
+            Exercise NewExercise = UserInputs<ExerciseDto>.GetNewExercise();
             ResponseDto<Exercise> CreatedExercise= Repo.CreateEntity(NewExercise).GetAwaiter().GetResult();
             UserOutputs<Exercise>.ShowResponse(CreatedExercise);
         }
 
-        public static void DeleteShift()
+        public static void DeleteExercise()
         {
-            throw new NotImplementedException();
+            List<Exercise> Exercises = Repo.GetAllEntities().GetAwaiter().GetResult().Data;
+            int? UserChoice = UserInputs<Exercise>.GetExerciseById(Exercises);
+            ResponseDto<Exercise> DeleteResponse = Repo.DeleteEntity(UserChoice).GetAwaiter().GetResult();
+            UserOutputs<Exercise>.ShowResponse(DeleteResponse);
         }
 
-        public static void  GetAllShifts()
+        public static void GetAllExercises()
         {
             ResponseDto<Exercise> Response =  Repo.GetAllEntities().GetAwaiter().GetResult();
             UserOutputs<Exercise>.ShowResponse(Response);
         }
 
-        public static void GetSingleShift()
+        public static void GetSingleExercise()
         {
             List<Exercise> Exercises= Repo.GetAllEntities().GetAwaiter().GetResult().Data;
-            int UserChoice=UserInputs<Exercise>.GetEntityById(Exercises);
+            int? UserChoice=UserInputs<Exercise>.GetExerciseById(Exercises);
             ResponseDto<Exercise> Response = Repo.GetEntiryById(UserChoice).GetAwaiter().GetResult();
             UserOutputs<Exercise>.ShowResponse(Response);
         }
 
-        public static void UpdateShift()
+        public static void UpdateExercise()
         {
-            throw new NotImplementedException();
+            List<Exercise> Exercises = Repo.GetAllEntities().GetAwaiter().GetResult().Data;
+            int? UserChoice = UserInputs<Exercise>.GetExerciseById(Exercises);
+            ResponseDto<Exercise> Response = Repo.GetEntiryById(UserChoice).GetAwaiter().GetResult();
+            Exercise UpdatedExercise = UserInputs<Exercise>.GetUpdatedEntity(Response.Data);
+            ResponseDto<Exercise> DeleteResponse = Repo.UpdateEntity(UpdatedExercise, UserChoice).GetAwaiter().GetResult();
+            UserOutputs<Exercise>.ShowResponse(Response);
         }
     }
 }

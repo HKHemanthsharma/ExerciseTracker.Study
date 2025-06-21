@@ -49,12 +49,7 @@ namespace ExerciseTracker.UI
                 {
                     List<string> RowData = new();
                     props.ForEach(x => RowData.Add(x.GetValue(ResponseObject).ToString()));
-                    Responsetable.AddRow(RowData.ToArray());
-                    //foreach (var prop in props)
-                    //{
-                    //    var PropValue = prop.GetValue(ResponseObject).ToString();
-                    //    RowData.Add(PropValue);
-                    //}
+                    Responsetable.AddRow(RowData.ToArray());                  
                 }
                 Responsetable.Border = TableBorder.Double;
                 AnsiConsole.Write(Responsetable);

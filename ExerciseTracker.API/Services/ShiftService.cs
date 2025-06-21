@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ExerciseTracker.UI.Models;
+using ExerciseTracker.UI.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +10,11 @@ namespace ExerciseTracker.UI.Services
 {
     public static class ShiftService
     {
+        public static readonly Repository<ExerciseShift> Repo = new Repository<ExerciseShift>();
         public static void CreateShift()
         {
-            throw new NotImplementedException();
+            ExerciseShift NewExercise=UserInputs<ExerciseShift>
+            Repo.CreateEntity()
         }
 
         public static void DeleteShift()

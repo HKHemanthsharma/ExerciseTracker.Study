@@ -39,32 +39,37 @@ namespace ExerciseTracker.UI
 
         private static void ExerciseServiceMenu()
         {
-            Console.Clear();
-            var userOption = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()
-                .Title("Please select an option")
-                .AddChoices(["ViewAllExercises", "View a single exercise", "Delete a Exercise", "Create a new Exercise", "Update a Exercise", "Exit"])
-                );
-
-            switch (userOption)
+            bool isAppRunning = true;
+            while (isAppRunning)
             {
-                case "ViewAllExercises":
-                    ExerciseService.GetAllShifts();
-                    break;
-                case "View a single exercise":
-                    ExerciseService.GetSingleShift();
-                    break;
-                case "Delete a Exercise":
-                    ExerciseService.DeleteShift();
-                    break;
-                case "Create a new Exercise":
-                    ExerciseService.CreateShift();
-                    break;
-                case "Update a Exercise":
-                    ExerciseService.UpdateShift();
-                    break;
-                case "Exit":
-                    break;
+                Console.Clear();
+                var userOption = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                    .Title("Please select an option")
+                    .AddChoices(["ViewAllExercises", "View a single exercise", "Delete a Exercise", "Create a new Exercise", "Update a Exercise", "Exit"])
+                    );
+
+                switch (userOption)
+                {
+                    case "ViewAllExercises":
+                        ExerciseService.GetAllExercises();
+                        break;
+                    case "View a single exercise":
+                        ExerciseService.GetSingleExercise();
+                        break;
+                    case "Delete a Exercise":
+                        ExerciseService.DeleteExercise();
+                        break;
+                    case "Create a new Exercise":
+                        ExerciseService.CreateExercise();
+                        break;
+                    case "Update a Exercise":
+                        ExerciseService.UpdateExercise();
+                        break;
+                    case "Exit":
+                        isAppRunning = false;
+                        break;
+                }
             }
         }
 
