@@ -25,8 +25,15 @@ namespace ExerciseTracker.UI
                 .AddChoices(UserChoices));
             return Entities.Where(x => x.name == UserOption).Select(x => x.id).FirstOrDefault();
         }
-        internal static int GetShiftById(List<ExerciseShift> Entities)
+        internal static int GetShiftById(List<ExerciseShiftDto> Entities)
         {
+            if(Entities.Count()==0)
+            {
+                AnsiConsole.MarkupLine("[pink3] No Entities Found!!![/]");
+                Console.WriteLine("Click any key to Continue");
+                Console.ReadLine();
+                return -1;
+            }
             List<string> UserChoices = new();
             UserChoices = Entities.Select(x => $"ShiftId={x.Id};ShiftDate={x.ExerciseDate};ShiftStartTime={x.StartTime}").ToList();
             var UserOption = AnsiConsole.Prompt(new SelectionPrompt<string>().Title("Please Choose an option")
@@ -50,7 +57,7 @@ namespace ExerciseTracker.UI
             string UpdatedValue;
             foreach (var prop in props)
             {
-                if (prop.Name != "id")
+                if (prop.Name.ToLower() != "id")
                 {
                     var res = AnsiConsole.Confirm($"[fuchsia]Do you want to change the[yellow] {prop.Name.ToString()}[/] Property:? The Current Value is [aqua]{prop.GetValue(UpdatedList[0])}[/][/]");
                     if (res)
@@ -60,10 +67,17 @@ namespace ExerciseTracker.UI
 
                     }
                     else
-                    {
+                    { 
                         UpdatedValue = prop.GetValue(UpdatedList[0]).ToString();
                     }
-                    prop.SetValue(UpdatedEntity, UpdatedValue);
+                    if (prop.Name.ToLower() == "exerciseid")
+                    {
+                        prop.SetValue(UpdatedEntity, int.Parse(UpdatedValue));
+                    }
+                    else
+                    {
+                        prop.SetValue(UpdatedEntity, UpdatedValue);
+                    }
                 }
             }
             return UpdatedEntity;

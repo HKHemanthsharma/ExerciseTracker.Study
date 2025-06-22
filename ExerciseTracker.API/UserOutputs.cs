@@ -32,6 +32,10 @@ namespace ExerciseTracker.UI
                 panel.Border = BoxBorder.Rounded;
                 panel.Padding = new Padding(2, 2, 2, 2);
                 AnsiConsole.Write(panel);
+                if(Response.ResponseMethod=="DELETE")
+                {
+                    return;
+                }
                 string Heading = Response.ResponseMethod switch
                 {
                     "GET" => "Here is the Entity Details",
@@ -42,11 +46,12 @@ namespace ExerciseTracker.UI
                 };
                 if (Response.Data.Count() == 0)
                 {
-                    ResponseString = $"[yellow]Response Method:{Response.ResponseMethod}\nCurrently No Data Found For the requested Entityy in DataBase[/][/]";
+                    ResponseString = $"[yellow]Response Method:{Response.ResponseMethod}\nCurrently No Data Found For the requested Entityy in DataBase[/]";
                     var EmptyMessagePanel = new Panel(ResponseString);
-                    panel.Header = new PanelHeader("[lime]Empty Data!!![/]");
-                    panel.Border = BoxBorder.Rounded;
-                    panel.Padding = new Padding(2, 2, 2, 2);
+                    EmptyMessagePanel.Header = new PanelHeader("[lime]Empty Data!!![/]");
+                    EmptyMessagePanel.Border = BoxBorder.Rounded;
+                    EmptyMessagePanel.Padding = new Padding(2, 2, 2, 2);
+                    AnsiConsole.Write(EmptyMessagePanel);
                 }
                 else
                 {

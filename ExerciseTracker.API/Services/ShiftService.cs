@@ -28,7 +28,14 @@ namespace ExerciseTracker.UI.Services
 
         public static void DeleteShift()
         {
-            throw new NotImplementedException();
+            ResponseDto<ExerciseShiftDto> ShiftsList = Repo.GetAllEntities().GetAwaiter().GetResult();
+            int SelectedShiftId = UserInputs<ExerciseShift>.GetShiftById(ShiftsList.Data);
+            if(SelectedShiftId==-1)
+            {
+                return;
+            }
+            ResponseDto<ExerciseShiftDto> DeleteShiftRsponse = Repo.DeleteEntity(SelectedShiftId).GetAwaiter().GetResult();
+            UserOutputs<ExerciseShiftDto>.ShowResponse(DeleteShiftRsponse);
         }
 
         public static void GetAllShifts()
@@ -39,12 +46,24 @@ namespace ExerciseTracker.UI.Services
 
         public static void GetSingleShift()
         {
-            throw new NotImplementedException();
+             ResponseDto <ExerciseShiftDto > ShiftsList = Repo.GetAllEntities().GetAwaiter().GetResult();
+             int SelectedShiftId = UserInputs<ExerciseShift>.GetShiftById(ShiftsList.Data);
+            if(SelectedShiftId==-1)
+            {
+                return;
+            }
+            ResponseDto<ExerciseShiftDto> ShiftByIdRsponse=Repo.GetEntiryById(SelectedShiftId).GetAwaiter().GetResult();
+             UserOutputs<ExerciseShiftDto>.ShowResponse(ShiftByIdRsponse);
         }
 
         public static void UpdateShift()
         {
-            throw new NotImplementedException();
+            List<ExerciseShiftDto> ExerciseShifts = Repo.GetAllEntities().GetAwaiter().GetResult().Data;
+            int? UserChoice = UserInputs<Exercise>.GetShiftById(ExerciseShifts);
+            ResponseDto<ExerciseShiftDto> Response = Repo.GetEntiryById(UserChoice).GetAwaiter().GetResult();
+            ExerciseShiftDto UpdatedExercise = UserInputs<ExerciseShiftDto>.GetUpdatedEntity(Response.Data);
+            ResponseDto<ExerciseShiftDto> UpdateResponse = Repo.UpdateEntity(UpdatedExercise, UserChoice).GetAwaiter().GetResult();
+            UserOutputs<ExerciseShiftDto>.ShowResponse(UpdateResponse);
         }
     }
 }

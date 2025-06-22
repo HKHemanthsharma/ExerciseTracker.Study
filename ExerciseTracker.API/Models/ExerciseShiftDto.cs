@@ -10,6 +10,8 @@ namespace ExerciseTracker.UI.Models
 {
     public class ExerciseShiftDto
     {
+        [property:JsonPropertyName("id")]
+        public int? Id { get; set; } 
         [property: JsonPropertyName("exerciseId")]
         public int ExerciseId { get; set; }
         [property: JsonPropertyName("startTime")]

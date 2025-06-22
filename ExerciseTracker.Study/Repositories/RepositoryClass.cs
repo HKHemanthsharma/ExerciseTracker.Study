@@ -34,7 +34,7 @@ namespace ExerciseTracker.Study.Repositories
                     IsSuccess = false,
                     ResponseMethod = "POST",
                     Message = "Error Occured: "+e.Message,
-                    Data = null
+                    Data = []
                 };
             }
         }
@@ -53,7 +53,7 @@ namespace ExerciseTracker.Study.Repositories
                         IsSuccess = true,
                         ResponseMethod = "DELETE",
                         Message = "Successfully Deleted The Entities",
-                        Data = null
+                        Data = []
                     };
                 }
                 else
@@ -63,7 +63,7 @@ namespace ExerciseTracker.Study.Repositories
                         IsSuccess = false,
                         ResponseMethod = "DELETE",
                         Message = "No Entity Found to Delete",
-                        Data = null
+                        Data = []
                     };
                 }
             }
@@ -74,7 +74,7 @@ namespace ExerciseTracker.Study.Repositories
                     IsSuccess = false,
                     ResponseMethod = "DELETE",
                     Message = "Error Occured: " + e.Message,
-                    Data = null
+                    Data = []
                 };
             }
 
@@ -100,7 +100,7 @@ namespace ExerciseTracker.Study.Repositories
                     IsSuccess = false,
                     ResponseMethod = "GET",
                     Message = "Error Occured: " + e.Message,
-                    Data = null
+                    Data = []
                 };
             }
         }
@@ -135,7 +135,7 @@ namespace ExerciseTracker.Study.Repositories
                     IsSuccess = false,
                     ResponseMethod = "GET",
                     Message = "Error Occured: " + e.Message,
-                    Data = null
+                    Data = []
                 };
             }
         }
@@ -153,7 +153,7 @@ namespace ExerciseTracker.Study.Repositories
                         IsSuccess = true,
                         ResponseMethod = "PUT",
                         Message = "Successfully Updated The Entities",
-                        Data = null
+                        Data = []
                     };
                 }
                 else
@@ -163,7 +163,7 @@ namespace ExerciseTracker.Study.Repositories
                         IsSuccess = false,
                         ResponseMethod = "PUT",
                         Message = "No Entity Found to Update",
-                        Data = null
+                        Data = []
                     };
                 }
             }
@@ -174,7 +174,7 @@ namespace ExerciseTracker.Study.Repositories
                     IsSuccess = false,
                     ResponseMethod = "PUT",
                     Message = "Error Occured: " + e.Message,
-                    Data = null
+                    Data = []
                 };
             }
         }
