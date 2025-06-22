@@ -16,7 +16,14 @@ namespace ExerciseTracker.UI.Repositories
         HttpClient Client;
         public Repository()
         {
-            BaseURL = ClientService.GetBaseURL() + typeof(T).Name;
+            if (typeof(T).Name == "ExerciseShiftDto")
+            {
+                BaseURL = ClientService.GetBaseURL() + "ExerciseShift";
+            }
+            else
+            {
+                BaseURL = ClientService.GetBaseURL() + typeof(T).Name;
+            }
             Client = ClientService.GetHttpClient();
         }
         public async Task<ResponseDto<T>> GetAllEntities()
@@ -24,6 +31,8 @@ namespace ExerciseTracker.UI.Repositories
             try
             {
                 //https://localhost:7249/api/Exercise
+                //https://localhost:7249/api/ExerciseShift
+                string Stringresponse = await Client.GetStringAsync(BaseURL);
                 using (var response = await Client.GetStreamAsync(BaseURL))
                 {
                     ResponseDto<T> GetResponse = JsonSerializer.Deserialize<ResponseDto<T>>(response);

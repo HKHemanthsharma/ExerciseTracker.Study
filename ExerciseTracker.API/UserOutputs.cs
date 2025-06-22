@@ -40,19 +40,30 @@ namespace ExerciseTracker.UI
                     "DELETE" => "Details of the Entity Deleted",
                     _=>"Unknown"
                 };
-                AnsiConsole.MarkupLine(Heading);
-                Table Responsetable = new Table();
-                Responsetable.Title = new TableTitle(typeof(T).Name);
-                var props = typeof(T).GetProperties().ToList(); ;
-                props.ForEach(x => Responsetable.AddColumn(Markup.Escape(x.Name)));
-                foreach(var ResponseObject in Response.Data)
+                if (Response.Data.Count() == 0)
                 {
-                    List<string> RowData = new();
-                    props.ForEach(x => RowData.Add(x.GetValue(ResponseObject).ToString()));
-                    Responsetable.AddRow(RowData.ToArray());                  
+                    ResponseString = $"[yellow]Response Method:{Response.ResponseMethod}\nCurrently No Data Found For the requested Entityy in DataBase[/][/]";
+                    var EmptyMessagePanel = new Panel(ResponseString);
+                    panel.Header = new PanelHeader("[lime]Empty Data!!![/]");
+                    panel.Border = BoxBorder.Rounded;
+                    panel.Padding = new Padding(2, 2, 2, 2);
                 }
-                Responsetable.Border = TableBorder.Double;
-                AnsiConsole.Write(Responsetable);
+                else
+                {
+                    AnsiConsole.MarkupLine(Heading);
+                    Table Responsetable = new Table();
+                    Responsetable.Title = new TableTitle(typeof(T).Name);
+                    var props = typeof(T).GetProperties().ToList(); ;
+                    props.ForEach(x => Responsetable.AddColumn(Markup.Escape(x.Name)));
+                    foreach (var ResponseObject in Response.Data)
+                    {
+                        List<string> RowData = new();
+                        props.ForEach(x => RowData.Add(x.GetValue(ResponseObject).ToString()));
+                        Responsetable.AddRow(RowData.ToArray());
+                    }
+                    Responsetable.Border = TableBorder.Double;
+                    AnsiConsole.Write(Responsetable);
+                }
             }
             Console.ReadLine();
         }

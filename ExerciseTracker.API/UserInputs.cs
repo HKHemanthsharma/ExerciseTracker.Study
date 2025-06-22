@@ -4,8 +4,10 @@ using Spectre.Console;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -65,6 +67,82 @@ namespace ExerciseTracker.UI
                 }
             }
             return UpdatedEntity;
+        }
+
+        internal static ExerciseShiftDto GetNewShift(List<Exercise> Exercises)
+        {
+            AnsiConsole.MarkupLine("[cyan1]Choose the Exercise for which Shift is to be Created:[/]");
+            //Table Responsetable = new Table();
+            //Responsetable.Title = new TableTitle("[lightseagreen]Available Exercises[/]");
+            //Responsetable.AddColumn("Id");
+            //Responsetable.AddColumn("Name");
+            //foreach (var Exercise in Exercises)
+            //{   
+            //    Responsetable.AddRow(Exercise.id.ToString(),Exercise.name.ToString());
+            //}
+            //Responsetable.Border = TableBorder.Double;
+            //AnsiConsole.Write(Responsetable);
+           List<string> ExerciseNames=Exercises.Select(x => $"Id:{x.id} ExerciseName:{x.name}").ToList();
+            string Userchoice=AnsiConsole.Prompt(new SelectionPrompt<string>()
+                .Title("Please select an Exercise for the Shift:")
+                .AddChoices(ExerciseNames));
+            int ExerciseId = int.Parse(Userchoice.Split(" ")[0].Split(":")[1]);
+            AnsiConsole.MarkupLine("[yellow3] Enter startTime of Shift[/]");
+            DateTime StartTime = GetShiftTime();
+            AnsiConsole.MarkupLine("[yellow3] Enter EndTime of Shift[/]");
+            DateTime EndTime = GetShiftTime(StartTime);
+            DateTime ExerciseDate = GetShiftDate();
+            AnsiConsole.MarkupLine("comments for this shift?");
+            string? Comments= Console.ReadLine();
+            return new ExerciseShiftDto
+            {
+                ExerciseId = ExerciseId,
+                StartTime = StartTime.ToString("HH:mm"),
+                EndTime = EndTime.ToString("HH:mm"),
+                ExerciseDate = ExerciseDate.ToString("dd-MM-yyyy"),
+                Comments = Comments
+            };
+        }
+
+        private static DateTime GetShiftDate()
+        {
+            bool res=AnsiConsole.Confirm("[orange4] Do you want to Enter Custom date?[/][chartreuse2](Default value will be Today's Date)[/]");
+            DateTime ExerciseDate;
+            if (res)
+            {
+                 ExerciseDate = Validations.GetValidDate();
+            }
+            else
+            {
+                 ExerciseDate = DateTime.Now.Date;
+            }
+            return ExerciseDate;
+        }
+
+        private static DateTime GetShiftTime(DateTime? StartTime=null)
+        {
+            DateTime StartTimeValue=DateTime.Now;
+            bool isTimeValid = true;
+            if (StartTime != null)
+            {
+                StartTimeValue = (DateTime)StartTime;
+                isTimeValid = false;
+                
+            }          
+            DateTime TimeResult=Validations.GetValidTime();           
+           while(!isTimeValid)
+            {
+                if (TimeResult >= StartTime)
+                {
+                    isTimeValid = true;
+                }
+                else
+                {
+                    AnsiConsole.MarkupLine($"[lightgreen]The StartTime of the Shift is {StartTimeValue.ToShortTimeString()} EndDate Can't be before StartTime [/]");
+                    TimeResult= Validations.GetValidTime();
+                }
+            }
+            return TimeResult;
         }
     }
 }
