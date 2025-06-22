@@ -75,31 +75,36 @@ namespace ExerciseTracker.UI
 
         private static void ShiftServiceMenu()
         {
-            var userOption = AnsiConsole.Prompt(
+            bool isAppRunning = true;
+            while (isAppRunning)
+            {
+                var userOption = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
                 .Title("Please select an option")
                 .AddChoices(["ViewAllShifts", "View a single Shift", "Delete a shift", "Create a new Shift", "Update a Shift", "Exit"])
                 );
 
-            switch (userOption)
-            {
-                case "ViewAllShifts":
-                    ShiftService.GetAllShifts();
-                    break;
-                case "View a single Shift":
-                    ShiftService.GetSingleShift();
-                    break;
-                case "Delete a shift":
-                    ShiftService.DeleteShift();
-                    break;
-                case "Create a new Shift":
-                    ShiftService.CreateShift();
-                    break;
-                case "Update a Shift":
-                    ShiftService.UpdateShift();
-                    break;
-                case "Exit":
-                    break;
+                switch (userOption)
+                {
+                    case "ViewAllShifts":
+                        ShiftService.GetAllShifts();
+                        break;
+                    case "View a single Shift":
+                        ShiftService.GetSingleShift();
+                        break;
+                    case "Delete a shift":
+                        ShiftService.DeleteShift();
+                        break;
+                    case "Create a new Shift":
+                        ShiftService.CreateShift();
+                        break;
+                    case "Update a Shift":
+                        ShiftService.UpdateShift();
+                        break;
+                    case "Exit":
+                        isAppRunning = false;
+                        break;
+                }
             }
         }
     }
