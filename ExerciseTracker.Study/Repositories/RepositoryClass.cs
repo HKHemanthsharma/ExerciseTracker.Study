@@ -53,7 +53,7 @@ namespace ExerciseTracker.Study.Repositories
                         IsSuccess = true,
                         ResponseMethod = "DELETE",
                         Message = "Successfully Deleted The Entities",
-                        Data = []
+                        Data = [Entity]
                     };
                 }
                 else
@@ -153,7 +153,7 @@ namespace ExerciseTracker.Study.Repositories
                         IsSuccess = true,
                         ResponseMethod = "PUT",
                         Message = "Successfully Updated The Entities",
-                        Data = []
+                        Data = [Entity]
                     };
                 }
                 else

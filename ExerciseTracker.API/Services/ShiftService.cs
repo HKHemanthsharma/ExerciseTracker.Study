@@ -61,8 +61,9 @@ namespace ExerciseTracker.UI.Services
             List<ExerciseShiftDto> ExerciseShifts = Repo.GetAllEntities().GetAwaiter().GetResult().Data;
             int? UserChoice = UserInputs<Exercise>.GetShiftById(ExerciseShifts);
             ResponseDto<ExerciseShiftDto> Response = Repo.GetEntiryById(UserChoice).GetAwaiter().GetResult();
-            ExerciseShiftDto UpdatedExercise = UserInputs<ExerciseShiftDto>.GetUpdatedEntity(Response.Data);
-            ResponseDto<ExerciseShiftDto> UpdateResponse = Repo.UpdateEntity(UpdatedExercise, UserChoice).GetAwaiter().GetResult();
+            ExerciseShiftDto UpdatedExerciseShift = UserInputs<ExerciseShiftDto>.GetUpdatedEntity(Response.Data);
+            UpdatedExerciseShift = HelperMethods.RefineExerciseShift(UpdatedExerciseShift);
+            ResponseDto<ExerciseShiftDto> UpdateResponse = Repo.UpdateEntity(UpdatedExerciseShift, UserChoice).GetAwaiter().GetResult();
             UserOutputs<ExerciseShiftDto>.ShowResponse(UpdateResponse);
         }
     }

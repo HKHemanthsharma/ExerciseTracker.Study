@@ -1,15 +1,6 @@
-﻿using ExerciseTracker.UI.Interfaces;
-using ExerciseTracker.UI.Models;
+﻿using ExerciseTracker.UI.Models;
+using ExerciseTracker.UI.Repositories;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Globalization;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExerciseTracker.UI
 {
@@ -27,7 +18,7 @@ namespace ExerciseTracker.UI
         }
         internal static int GetShiftById(List<ExerciseShiftDto> Entities)
         {
-            if(Entities.Count()==0)
+            if (Entities.Count() == 0)
             {
                 AnsiConsole.MarkupLine("[pink3] No Entities Found!!![/]");
                 Console.WriteLine("Click any key to Continue");
@@ -54,20 +45,44 @@ namespace ExerciseTracker.UI
         {
             T UpdatedEntity = Activator.CreateInstance<T>();
             var props = typeof(T).GetProperties();
-            string UpdatedValue;
+            string UpdatedValue = "";
             foreach (var prop in props)
             {
-                if (prop.Name.ToLower() != "id")
+                string PropertyName = prop.Name;
+                if (PropertyName.ToLower() != "id")
                 {
                     var res = AnsiConsole.Confirm($"[fuchsia]Do you want to change the[yellow] {prop.Name.ToString()}[/] Property:? The Current Value is [aqua]{prop.GetValue(UpdatedList[0])}[/][/]");
                     if (res)
                     {
-                        AnsiConsole.MarkupLine("[olive] Enter the Updated Value:[/]");
-                        UpdatedValue = Console.ReadLine();
+                        if (PropertyName.ToLower() == "exerciseid")
+                        {
+                            Repository<Exercise> Repo = new();
+
+                            int? ExerciseId = UserInputs<Exercise>.GetExerciseById(Repo.GetAllEntities().GetAwaiter().GetResult().Data);
+                            UpdatedValue = ExerciseId.ToString();
+
+                        }
+                        else if (PropertyName.ToLower() == "starttime")
+                        {
+                            UpdatedValue = UserInputs<ExerciseShiftDto>.GetShiftTime().ToString("HH:mm");
+                        }
+                        else if (PropertyName.ToLower() == "endtime")
+                        {
+                            UpdatedValue = UserInputs<ExerciseShiftDto>.GetShiftTime(DateTime.Parse(UpdatedValue)).ToString("HH:mm");
+                        }
+                        else if (PropertyName.ToLower() == "exercisedate")
+                        {
+                            UpdatedValue = UserInputs<ExerciseShiftDto>.GetShiftDate().ToString("dd-MM-yyyy");
+                        }
+                        else
+                        {
+                            AnsiConsole.MarkupLine("[olive] Enter the Updated Value:[/]");
+                            UpdatedValue = Console.ReadLine();
+                        }
 
                     }
                     else
-                    { 
+                    {
                         UpdatedValue = prop.GetValue(UpdatedList[0]).ToString();
                     }
                     if (prop.Name.ToLower() == "exerciseid")
@@ -96,8 +111,8 @@ namespace ExerciseTracker.UI
             //}
             //Responsetable.Border = TableBorder.Double;
             //AnsiConsole.Write(Responsetable);
-           List<string> ExerciseNames=Exercises.Select(x => $"Id:{x.id} ExerciseName:{x.name}").ToList();
-            string Userchoice=AnsiConsole.Prompt(new SelectionPrompt<string>()
+            List<string> ExerciseNames = Exercises.Select(x => $"Id:{x.id} ExerciseName:{x.name}").ToList();
+            string Userchoice = AnsiConsole.Prompt(new SelectionPrompt<string>()
                 .Title("Please select an Exercise for the Shift:")
                 .AddChoices(ExerciseNames));
             int ExerciseId = int.Parse(Userchoice.Split(" ")[0].Split(":")[1]);
@@ -107,7 +122,7 @@ namespace ExerciseTracker.UI
             DateTime EndTime = GetShiftTime(StartTime);
             DateTime ExerciseDate = GetShiftDate();
             AnsiConsole.MarkupLine("comments for this shift?");
-            string? Comments= Console.ReadLine();
+            string? Comments = Console.ReadLine();
             return new ExerciseShiftDto
             {
                 ExerciseId = ExerciseId,
@@ -120,31 +135,31 @@ namespace ExerciseTracker.UI
 
         private static DateTime GetShiftDate()
         {
-            bool res=AnsiConsole.Confirm("[orange4] Do you want to Enter Custom date?[/][chartreuse2](Default value will be Today's Date)[/]");
+            bool res = AnsiConsole.Confirm("[orange4] Do you want to Enter Custom date?[/][chartreuse2](Default value will be Today's Date)[/]");
             DateTime ExerciseDate;
             if (res)
             {
-                 ExerciseDate = Validations.GetValidDate();
+                ExerciseDate = Validations.GetValidDate();
             }
             else
             {
-                 ExerciseDate = DateTime.Now.Date;
+                ExerciseDate = DateTime.Now.Date;
             }
             return ExerciseDate;
         }
 
-        private static DateTime GetShiftTime(DateTime? StartTime=null)
+        private static DateTime GetShiftTime(DateTime? StartTime = null)
         {
-            DateTime StartTimeValue=DateTime.Now;
+            DateTime StartTimeValue = DateTime.Now;
             bool isTimeValid = true;
             if (StartTime != null)
             {
                 StartTimeValue = (DateTime)StartTime;
                 isTimeValid = false;
-                
-            }          
-            DateTime TimeResult=Validations.GetValidTime();           
-           while(!isTimeValid)
+
+            }
+            DateTime TimeResult = Validations.GetValidTime();
+            while (!isTimeValid)
             {
                 if (TimeResult >= StartTime)
                 {
@@ -153,7 +168,7 @@ namespace ExerciseTracker.UI
                 else
                 {
                     AnsiConsole.MarkupLine($"[lightgreen]The StartTime of the Shift is {StartTimeValue.ToShortTimeString()} EndDate Can't be before StartTime [/]");
-                    TimeResult= Validations.GetValidTime();
+                    TimeResult = Validations.GetValidTime();
                 }
             }
             return TimeResult;

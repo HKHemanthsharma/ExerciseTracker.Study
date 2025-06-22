@@ -1,15 +1,9 @@
 ﻿using ExerciseTracker.UI.Models;
 using Spectre.Console;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.Marshalling;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExerciseTracker.UI
 {
-    public static class UserOutputs<T> where T:class
+    public static class UserOutputs<T> where T : class
     {
         public static void ShowResponse(ResponseDto<T> Response)
         {
@@ -32,17 +26,13 @@ namespace ExerciseTracker.UI
                 panel.Border = BoxBorder.Rounded;
                 panel.Padding = new Padding(2, 2, 2, 2);
                 AnsiConsole.Write(panel);
-                if(Response.ResponseMethod=="DELETE")
-                {
-                    return;
-                }
                 string Heading = Response.ResponseMethod switch
                 {
                     "GET" => "Here is the Entity Details",
                     "POST" => "Details of the Entity Created",
                     "PUT" => "Details of the updated Entity",
                     "DELETE" => "Details of the Entity Deleted",
-                    _=>"Unknown"
+                    _ => "Unknown"
                 };
                 if (Response.Data.Count() == 0)
                 {
